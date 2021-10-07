@@ -1,0 +1,14 @@
+ul{
+    margin: 40px 400px 40px 20px;
+    
+}
+li{
+    padding:0px;
+}
+li:hover{
+    background-color: blue;
+}
+a:hover{
+    color:white
+}
+
