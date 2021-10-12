@@ -4,10 +4,12 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse
+  HttpErrorResponse,
+  HttpResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { LoginData } from './login/loginData';
 
 @Injectable({
   providedIn:'root'
@@ -18,9 +20,18 @@ export class MockInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     
-    if(request.url.endsWith('/posts')){
-      this.route.navigateByUrl('admin');
-      throw new HttpErrorResponse({status:400,url:'admin'});
+    if(request.url.endsWith('/api/login') && request.method.toLowerCase() == 'post'){
+      let credential:LoginData;
+      credential = request.body as LoginData;
+      console.log('after : '+credential);
+
+      if(credential.username == 'abhijeet' && credential.password == 'password'){
+        return of(new HttpResponse({ status: 200, body: ((credential) as LoginData) }));
+      }
+      else{
+        throw new HttpErrorResponse({status:400,url:'admin'});
+      }
+      
     }
 
     return next.handle(request);

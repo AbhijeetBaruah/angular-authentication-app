@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { LoginData } from '../login/loginData';
 
 
 @Injectable({
@@ -10,8 +11,8 @@ export class AuthService {
   constructor(private httpClient:HttpClient) {
   }
 
-  login(){
+  login(credential:LoginData){
     console.log('before');
-    return this.httpClient.get('https://jsonplaceholder.typicode.com/posts');
+    return this.httpClient.post('/api/login',credential);
   }
 }
