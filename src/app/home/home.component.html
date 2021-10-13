@@ -1,12 +1,12 @@
 <ul class="list-group">
-    <li class="list-group-item" routerLinkActive="active current">
+    <li *ngIf="isAdmin()" class="list-group-item" routerLinkActive="active current">
         <a class="nav-link" routerLink="admin">Admin</a>
     </li>
-    <li class="list-group-item" routerLinkActive="active current">
+    <li *ngIf="!isLoggedIn()" class="list-group-item" routerLinkActive="active current">
         <a class="nav-link" routerLink="login">Login</a>
     </li>
-    <li class="list-group-item" routerLinkActive="active current">
-        <a class="nav-link" routerLink="logout">Logout</a>
+    <li *ngIf="isLoggedIn()" class="list-group-item" routerLinkActive="active current">
+        <a class="nav-link" routerLink="logout" (click)="logout()">Logout</a>
     </li>     
 </ul>
 

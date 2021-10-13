@@ -15,14 +15,14 @@
                     <label style="padding: 0px 10px 0px 0px;" for="username"> Username:</label>
                     <input type="text" formControlName="username" id="username">
                     <p style="margin-bottom: 10px;"
-                    class="text-white-50 mb-5" *ngIf="userName.touched">
+                    class="text-white-50 mb-5" *ngIf="userName.touched && userName.value == ''">
                         Please enter a Username
                     </p>
                 </div>
                 <div>
                     <label style="padding: 0px 10px 0px 0px;" for="password"> Password:</label>
                     <input type="password" formControlName="password" id="password">
-                    <p class="text-white-50 mb-5" *ngIf="password.touched">
+                    <p class="text-white-50 mb-5" *ngIf="password.touched && password.value==''">
                         Please enter a Password
                     </p>
                 </div>
@@ -30,8 +30,9 @@
                 <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
 
                 <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+                
               </form>
-              
+              <div class="mb-0" style="margin-top:10px;color: red;" *ngIf="!isNotValid">in-valid login</div>
 
               
 

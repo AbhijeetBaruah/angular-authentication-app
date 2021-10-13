@@ -14,12 +14,12 @@ import { LoginData } from './loginData';
 export class LoginComponent implements OnInit {
 
   myForm:any;
-  isValid:boolean;
+  isNotValid:boolean;
 
   constructor(private authService:AuthService,
     private formBuilder:FormBuilder,
     private route:Router) { 
-      this.isValid=false;
+      this.isNotValid = true;
     }
 
   ngOnInit(): void {
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
       username:['',Validators.required],
       password:['',Validators.required]
     });
-
+    
   }
 
 
@@ -51,14 +51,13 @@ export class LoginComponent implements OnInit {
     console.log(credential);
     
     this.authService.login(credential).subscribe(
-      result=>{
-        if(result){
+      (result)=>{
+        if(this.isNotValid){
           this.route.navigate(['']);
-          this.isValid = true;
-          
-        }
-        else{
-          this.isValid=false;
+          console.log(result);
+          this.authService.store(result as LoginData);
+        }else{
+          this.isNotValid = false;
         }
       }
     )
