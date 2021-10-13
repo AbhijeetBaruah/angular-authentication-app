@@ -9,6 +9,7 @@ import { AdminComponent } from './admin/admin.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MockInterceptor } from './mock.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthGuardService } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ReactiveFormsModule } from '@angular/forms';
       provide:HTTP_INTERCEPTORS,
       useClass:MockInterceptor,
       multi:true
-    }
+    },
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })
