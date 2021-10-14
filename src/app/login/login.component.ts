@@ -1,7 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { LoginData } from './loginData';
 
@@ -18,7 +18,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService:AuthService,
     private formBuilder:FormBuilder,
-    private route:Router) { 
+    private route:Router,
+    private activateRoute:ActivatedRoute) { 
       this.isNotValid = true;
     }
 
@@ -52,13 +53,14 @@ export class LoginComponent implements OnInit {
     
     this.authService.login(credential).subscribe(
       (result)=>{
-        if(this.isNotValid){
-          this.route.navigate(['']);
-          console.log(result);
-          this.authService.store(result as LoginData);
-        }else{
-          this.isNotValid = false;
-        }
+        let returnUrl = this.activateRoute.snapshot.queryParamMap.get('returnUrl');
+        this.route.navigate([ returnUrl||'']);
+        this.authService.store(result as LoginData);
+        this.isNotValid = this.authService.isLoggedIn();
+      },
+      err=>{
+        this.isNotValid = this.authService.isLoggedIn();
+        console.log("error");
       }
     )
   }

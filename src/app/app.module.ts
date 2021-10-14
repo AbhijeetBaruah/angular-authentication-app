@@ -10,13 +10,16 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MockInterceptor } from './mock.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthGuardService } from './services/auth-guard.service';
+import { AdminAuthGuard } from './services/admin-auth-guard.service';
+import { NoAccessComponent } from './no-access/no-access.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    AdminComponent
+    AdminComponent,
+    NoAccessComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { AuthGuardService } from './services/auth-guard.service';
       useClass:MockInterceptor,
       multi:true
     },
-    AuthGuardService
+    AuthGuardService,
+    AdminAuthGuard
   ],
   bootstrap: [AppComponent]
 })

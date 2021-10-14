@@ -20,6 +20,7 @@ export class AuthService {
   }
 
   login(credential:LoginData){
+    localStorage.removeItem('token');
     console.log('before');
     return this.httpClient.post('/api/login',credential);
   }
